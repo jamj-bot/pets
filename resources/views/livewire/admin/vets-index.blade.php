@@ -35,7 +35,7 @@
 	    						<td>{{ $vet->phone }}</td>
 	    						<td>{{ $vet->email }}</td>
 	    						<td width="10px">
-					      			<a href="{{ route('admin.vets.edit', $vet) }}" class="btn btn-block btn-outline-warning btn-sm shadoww">Edit</a>
+					      			<a href="{{ route('admin.vets.edit', $vet) }}" class="btn btn-block btn-outline-warning btn-sm shadow">Edit</a>
 					      		</td>
 					      		<td width="10px">
 					      			<form action="{{ route('admin.vets.destroy', $vet) }}" method="POST">

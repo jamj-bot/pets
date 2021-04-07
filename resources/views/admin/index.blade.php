@@ -28,8 +28,7 @@
             	<!-- small box -->
             	<div class="small-box bg-success">
               		<div class="inner">
-                		<h3>{{ $pets }}<sup style="font-size: 20px">%</sup></h3>
-
+                		<h3>{{ $pets }}{{-- <sup style="font-size: 20px">%</sup> --}}</h3>
                 		<p>Registered pets</p>
               		</div>
               		<div class="icon">

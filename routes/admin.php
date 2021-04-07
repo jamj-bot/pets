@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\ConsultationController;
+use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\OwnerController;
 use App\Http\Controllers\Admin\PetController;
 use App\Http\Controllers\Admin\SpeciesController;
@@ -25,3 +27,5 @@ Route::resource('/species', SpeciesController::class)->names('admin.species');
 Route::resource('/owners', OwnerController::class)->names('admin.owners');
 Route::resource('/vets', VetController::class)->names('admin.vets');
 Route::resource('/pets', PetController::class)->names('admin.pets');
+Route::resource('/consultations', ConsultationController::class)->names('admin.consultations');
+Route::resource('/files', FileController::class)->names('admin.files');

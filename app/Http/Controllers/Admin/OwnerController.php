@@ -40,7 +40,7 @@ class OwnerController extends Controller
         $request->validate([
             'code' => 'required|numeric|unique:owners',
             'name' => 'required|max:255',
-            'phone' => 'required|numeric|unique:owners',
+            'phone' => 'required|unique:owners',
             'email' => 'required|email|unique:owners|max:255'
         ]);
 
@@ -84,7 +84,7 @@ class OwnerController extends Controller
         $request->validate([
             'code' => "required|numeric|unique:owners,code,$owner->id",
             'name' => 'required|max:255',
-            'phone' => "required|numeric|unique:owners,phone,$owner->id",
+            'phone' => "required|unique:owners,phone,$owner->id",
             'email' => "required|email|unique:owners,email,$owner->id|max:255"
         ]);
 

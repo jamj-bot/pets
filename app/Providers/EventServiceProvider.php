@@ -7,6 +7,11 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
+use App\Models\Pet;
+use App\Models\Consultation;
+use App\Observers\PetObserver;
+use App\Observers\ConsultationObserver;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -27,6 +32,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Pet::observe(PetObserver::class);
+        Consultation::observe(ConsultationObserver::class);
     }
 }

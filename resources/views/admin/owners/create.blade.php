@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Add Owner</h1>
+                <h1 class="display-4">Add Owner</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -26,7 +26,7 @@
     	<div class="card-body text-dark">
     		{!! Form::open(['route' => 'admin.owners.store']) !!}
 
-    			@include('admin.owners.partials.form')
+    			@include('admin.owners.partials.owner-form')
 
     			{!! Form::submit('Add Owner', ['class' => 'btn btn-primary shadow']) !!}
     		{!! Form::close() !!}

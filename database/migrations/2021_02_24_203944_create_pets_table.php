@@ -18,10 +18,10 @@ class CreatePetsTable extends Migration
             $table->unsignedBigInteger('owner_id');
             $table->unsignedBigInteger('species_id');
             $table->string('chip')->unique();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->string('breed')->nullable();
             $table->enum('sex', ['male', 'female', 'unknown']);
-            $table->date('dob')->nullable();
+            $table->date('dob');
             $table->enum('neutered', ['yes', 'no', 'unknown']);
             $table->text('diseases')->nullable();
             $table->text('allergies')->nullable();

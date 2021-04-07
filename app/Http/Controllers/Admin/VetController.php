@@ -37,9 +37,9 @@ class VetController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'code' => 'required|numeric|unique:vets',
-            'name' => 'required|max:255',
-            'phone' => 'required|numeric|unique:vets',
+            'code' => 'required|integer|between:1,999999999999|unique:vets',
+            'name' => 'required|max:50',
+            'phone' => 'required|unique:vets',
             'email' => 'required|email|unique:vets|max:255'
         ]);
 
@@ -80,9 +80,9 @@ class VetController extends Controller
     public function update(Request $request, Vet $vet)
     {
         $request->validate([
-            'code' => "required|numeric|unique:vets,code,$vet->id",
-            'name' => 'required|max:255',
-            'phone' => "required|numeric|unique:vets,phone,$vet->id",
+            'code' => "required|integer|between:1,999999999999|unique:vets,code,$vet->id",
+            'name' => 'required|max:50',
+            'phone' => "required|unique:vets,phone,$vet->id",
             'email' => "required|email|unique:vets,email,$vet->id|max:255"
         ]);
 

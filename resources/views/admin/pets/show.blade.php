@@ -6,12 +6,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>{{ $pet->name }}</h1>
+                <h1 class="display-4">Pet's Profile</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.pets.index') }}">Pets</a></li>
-                    <li class="breadcrumb-item active">Profile</li>
+                    <li class="breadcrumb-item active">{{ $pet->name }}</li>
                 </ol>
             </div>
         </div>
@@ -19,8 +19,8 @@
 @stop
 
 @section('content')
-
     <div class="container-fluid">
+{{--         {{Route::currentRouteName()}} --}}
             @if(session('info'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong>{{ session('info') }}</strong>
@@ -34,21 +34,23 @@
 
                 <!-- Profile Image -->
                 <div class="card card-purple card-outline">
-                    <div class="card-body box-profile text-dark text-capitalize">
+                    <div class="card-body box-profile text-dark">
                         <div class="text-center">
                             <img class="profile-user-img img-fluid img-circle" src="@if($pet->image) {{ Storage::url($pet->image->url) }} @else https://cdn.pixabay.com/photo/2017/01/31/17/57/animal-2025999_960_720.png @endif" alt="Pet profile picture">
                         </div>
 
-                        <h3 class="profile-username text-center">{{ $pet->name }}</h3>
 
-                        <p class="text-muted text-center">{{ $pet->chip }}</p>
+                        <h3 class="profile-username text-center mb-0">{{ $pet->name }}</h3>
 
-{{--                         <ul class="list-group list-group-unbordered mb-3">
-                            <li class="list-group-item">
-                                <b>Pets</b> <a class="float-right">9</a>
-                            </li>
-                        </ul>
- --}}                   <hr>
+                        <p class="text-muted text-center">#{{ $pet->chip }}</p>
+                        <div class="text-center">
+                        <button type="button" class="btn btn-sm bg-gradient-success shadow " data-toggle="modal" data-target="#createConsultation">
+                            <i class="fas fa-fw fa-plus"></i>Consultation
+                        </button>
+                        <!-- Modal -->
+                        @include('admin.pets.partials.modals.createConsultation')
+                        </div>
+                        <hr>
 
                         <strong><i class="fas fa-fw fa-user-tie"></i> Owner</strong>
                         <p class="text-muted">
@@ -61,17 +63,23 @@
                         <strong><i class="fas fa-fw fa-award"></i> Breed</strong>
                         <p class="text-muted">{{ $pet->breed }}</p>
                         <hr>
-                        <i class="fas fa-fw fa-venus-mars"></i> Gender</strong>
+                        <strong><i class="fas fa-fw fa-venus-mars"></i> Gender</strong>
                         <p class="text-muted">{{ $pet->sex }}</p>
                         <hr>
-                        <i class="fas fa-fw fa-calendar-day"></i> Age</strong>
-                        <p class="text-muted">{{ $pet->dob }}</p>
+                        <strong><i class="fas fa-fw fa-calendar-day"></i> DOB</strong>
+                        <p class="text-muted">{{ $pet->dob }} / {{ $pet->age }}</p>
                         <hr>
-                        <i class="fas fa-fw fa-neuter"></i> Neutered</strong>
+                        <strong><i class="fas fa-fw fa-neuter"></i> Neutered</strong>
                         <p class="text-muted">{{ $pet->neutered }}</p>
                         <hr>
 
-                        <a href="{{ route('admin.pets.edit', $pet) }}" class="btn bg-gradient-purple btn-block"><b>Edit</b></a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm bg-gradient-purple btn-block shadow" data-toggle="modal" data-target="#editPet">
+                            Edit
+                        </button>
+                        <!-- Modal -->
+                        @include('admin.pets.partials.modals.editPet')
+
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -84,80 +92,41 @@
                     <div class="card-header p-0 pt-1">
                         <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link {{ !$errors->any() ? 'active' : '' }}" id="custom-tabs-one-notes-tab" data-toggle="pill" href="#custom-tabs-one-notes" role="tab" aria-controls="custom-tabs-one-notes" aria-selected="false">Notes</a>
+                                <a class="nav-link active" id="custom-tabs-one-notes-tab" data-toggle="pill" href="#custom-tabs-one-notes" role="tab" aria-controls="custom-tabs-one-notes" aria-selected="false">Notes</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-one-pets-tab" data-toggle="pill" href="#custom-tabs-one-pets" role="tab" aria-controls="custom-tabs-one-pets" aria-selected="false">Pets</a>
+                                <a class="nav-link" id="custom-tabs-one-tests-tab" data-toggle="pill" href="#custom-tabs-one-tests" role="tab" aria-controls="custom-tabs-one-tests" aria-selected="true">Tests</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-one-timeline-tab" data-toggle="pill" href="#custom-tabs-one-timeline" role="tab" aria-controls="custom-tabs-one-timeline" aria-selected="true">timeline</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ $errors->any() ? 'active' : '' }}" id="custom-tabs-one-edit_pet-tab" data-toggle="pill" href="#custom-tabs-one-edit_pet" role="tab" aria-controls="custom-tabs-one-edit_pet" aria-selected="false">Edit Pet</a>
+                                <a class="nav-link" id="custom-tabs-one-consultations-tab" data-toggle="pill" href="#custom-tabs-one-consultations" role="tab" aria-controls="custom-tabs-one-consultations" aria-selected="true">Consultations</a>
                             </li>
                         </ul>
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
-                            <div class="tab-pane fade {{ !$errors->any() ? 'active show' : '' }}" id="custom-tabs-one-notes" role="tabpanel" aria-labelledby="custom-tabs-one-notes-tab">
+                            <div class="tab-pane fade active show" id="custom-tabs-one-notes" role="tabpanel" aria-labelledby="custom-tabs-one-notes-tab">
                                 @include('admin.pets.partials.tab-panes.notes')
                             </div>
-                            <div class="tab-pane fade" id="custom-tabs-one-pets" role="tabpanel" aria-labelledby="custom-tabs-one-pets-tab">
-                                Pets
+                            <div class="tab-pane fade" id="custom-tabs-one-tests" role="tabpanel" aria-labelledby="custom-tabs-one-tests-tab">
+                                @include('admin.pets.partials.tab-panes.tests')
                             </div>
-                            <div class="tab-pane fade" id="custom-tabs-one-timeline" role="tabpanel" aria-labelledby="custom-tabs-one-timeline-tab">
-                                Timeline
-                            </div>
-                            <div class="tab-pane fade {{ $errors->any() ? 'active show' : '' }}" id="custom-tabs-one-edit_pet" role="tabpanel" aria-labelledby="custom-tabs-one-edit_pet-tab">
-                                @include('admin.pets.partials.edit_pet')
+                            <div class="tab-pane fade" id="custom-tabs-one-consultations" role="tabpanel" aria-labelledby="custom-tabs-one-consultations-tab">
+                                @include('admin.pets.partials.tab-panes.consultations')
                             </div>
                         </div>
                     </div>
                     <!-- /.card -->
                 </div>
-
-{{--                 <div class="card">
-                    <div class="card-header p-2">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item"><a class="nav-link {{ !$errors->any() ? 'active' : '' }}" href="#activity" data-toggle="tab">Activity</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#pets" data-toggle="tab">Pets</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
-                            <li class="nav-item"><a class="nav-link {{ $errors->any() ? 'active' : '' }}" href="#add_pet" data-toggle="tab">Add Pet</a></li>
-                        </ul>
-                    </div><!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="tab-content text-dark">
-                            <div class="{{ !$errors->any() ? 'active' : '' }} tab-pane" id="activity">
-                                @include('admin.owners.partials.tab-panes.activity')
-                            </div>
-                            <!-- /.tab-pane -->
-
-                            <div class="tab-pane" id="pets">
-                            </div>
-                            <!-- /.tab-pane -->
-
-
-
-                            <div class="tab-pane" id="timeline">
-                            </div>
-                            <!-- /.tab-pane -->
-
-                            <div class="{{ $errors->any() ? 'active' : '' }} tab-pane" id="add_pet">
-                            </div>
-                            <!-- /.tab-pane -->
-                        </div>
-                        <!-- /.tab-content -->
-                    </div><!-- /.card-body -->
-                </div> --}}
-
             </div>
             <!-- /.col -->
         </div>
         <!-- /.row -->
+
     </div>
 @stop
 
 @section('css')
+
     <style>
         .image-wrapper{
             position: relative;
@@ -172,11 +141,27 @@
     </style>
 @stop
 
-
 @section('js')
     <script>
+        @if ($errors->has('chip') || $errors->has('name') || $errors->has('species') || $errors->has('breed') || $errors->has('sex') || $errors->has('dob') || $errors->has('neutered') || $errors->has('diseases') || $errors->has('allergies') || $errors->has('status') )
+            $('#editPet').modal('show')
+        @elseif($errors->any())
+            $('#createConsultation').modal('show')
+        @endif
+    </script>
+
+
+    @include('admin.partials.scripts.classic-editor')
+
+    <script>
         $(document).ready(function() {
-            $('#pets_table').DataTable();
+            $('.tests-js').select2();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#consultations_table').DataTable();
         });
     </script>
 
@@ -195,5 +180,4 @@
             reader.readAsDataURL(file);
         }
     </script>
-
 @stop

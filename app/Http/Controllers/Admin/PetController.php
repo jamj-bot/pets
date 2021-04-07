@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PetRequest;
+use App\Models\Consultation;
 use App\Models\Pet;
 use App\Models\Species;
+use App\Models\Test;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -64,7 +67,21 @@ class PetController extends Controller
     public function show(Pet $pet)
     {
         $species = Species::pluck('common_name', 'id');
-        return view('admin.pets.show', compact('pet', 'species'));
+        $tests = Test::pluck('test_name', 'id');
+
+         $years = Carbon::now()->diffInYears($pet->dob);
+            if(Carbon::now()->diffInDays($pet->dob) < 31) {
+                $age = Carbon::now()->diffInDays($pet->dob);
+                $pet->age = $age . ' days old';
+            } elseif (Carbon::now()->diffInMonths($pet->dob) < 12) {
+                $age = Carbon::now()->diffInMonths($pet->dob);
+                $pet->age = $age . ' months old';
+            } else {
+                $age = Carbon::now()->diffInYears($pet->dob);
+                $pet->age = $age . ' years old';
+            }
+        //$tests = Test::all();
+        return view('admin.pets.show', compact('pet', 'species', 'tests'));
     }
 
     /**
@@ -113,8 +130,10 @@ class PetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pet $pet)
     {
-        //
+        $pet->delete();
+
+        return back()->with('Info', 'Pet has been deleted');
     }
 }

@@ -15,7 +15,7 @@ class PetSeeder extends Seeder
      */
     public function run()
     {
-        $pets = Pet::factory(50)->create();
+        $pets = Pet::factory(5)->create();
     	foreach ($pets as $pet) {
             Image::factory(1)->create([
                 'imageable_id' => $pet->id,

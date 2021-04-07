@@ -11,10 +11,11 @@ class Pet extends Model
 
     protected $fillable = ['owner_id', 'species_id', 'chip', 'name', 'breed', 'sex', 'dob', 'neutered', 'diseases', 'allergies', 'status'];
 
+
     # One To Many
     public function consultations()
     {
-        return $this->hasMany(Cosultation::class);
+        return $this->hasMany(Consultation::class);
     }
 
     # One To Many (Inverse) / Belongs To
@@ -33,5 +34,13 @@ class Pet extends Model
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+
+    /**
+     * Get the files for the pet.
+     */
+    public function files()
+    {
+        return $this->hasMany(File::class);
     }
 }

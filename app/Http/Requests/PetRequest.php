@@ -29,7 +29,7 @@ class PetRequest extends FormRequest
             'owner_id' => 'required|numeric',
             'species_id' => 'required|numeric',
             'chip' => 'required|numeric|min:0|max:9999999999|unique:pets',
-            'name' => 'nullable|max:100',
+            'name' => 'required|max:100',
             'breed' => 'nullable|max:100',
             'sex' => 'required|in:"male","female","unknown"',
             'dob' => 'required|date',

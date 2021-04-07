@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Consultation;
 use App\Models\Owner;
 use App\Models\Species;
-use App\Models\Vet;
+use App\Models\Test;
 use App\Models\pet;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
@@ -21,12 +21,16 @@ class DatabaseSeeder extends Seeder
     {
         Storage::deleteDirectory('pets');
         Storage::makeDirectory('pets');
+        Storage::deleteDirectory('files');
+        Storage::makeDirectory('files');
+
 
     	$this->call(UserSeeder::class);
-    	Vet::factory(2)->create();
-    	Owner::factory(15)->create();
+        $this->call(VetSeeder::class);
+        $this->call(OwnerSeeder::class);
     	Species::factory(5)->create();
     	$this->call(PetSeeder::class);
-    	Consultation::factory(10)->create();
+        Test::factory(5)->create();
+        $this->call(ConsultationSeeder::class);
     }
 }

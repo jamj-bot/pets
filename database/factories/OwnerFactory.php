@@ -24,7 +24,7 @@ class OwnerFactory extends Factory
         return [
             'code' => $this->faker->unique()->numerify('############'),
             'name' => $this->faker->name(),
-            'phone' => $this->faker->unique()->numerify('5533########'),
+            'phone' => $this->faker->unique()->numerify('(33#) ###-####'),
             'email' => $this->faker->unique()->email,
         ];
     }

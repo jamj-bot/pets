@@ -32,7 +32,7 @@ class PetFactory extends Factory
             'sex' => $this->faker->randomElement(['male', 'female', 'unknown']),
             'dob' => $this->faker->dateTimeBetween('2010-01-01', '2021-01-01'),
             'neutered' => $this->faker->randomElement(['yes', 'no', 'unknown']),
-            'diseases' => $this->faker->paragraphs($nb = 5, $asText = true),
+            'diseases' => $this->faker->sentence(),
             'allergies' => $this->faker->text(50),
             'status' => $this->faker->randomElement(['alive', 'dead']),
         ];

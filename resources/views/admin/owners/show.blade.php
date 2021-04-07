@@ -6,12 +6,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>{{ $owner->name }}</h1>
+                <h1 class="display-4">Owner's Profile</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.owners.index') }}">Owners</a></li>
-                    <li class="breadcrumb-item active">Profile</li>
+                    <li class="breadcrumb-item active">{{ $owner->name }}</li>
                 </ol>
             </div>
         </div>
@@ -41,7 +41,7 @@
 
                         <h3 class="profile-username text-center">{{ $owner->name }}</h3>
 
-                        <p class="text-muted text-center">{{ $owner->code }}</p>
+                        <p class="text-muted text-center">#{{ $owner->code }}</p>
                         {{--                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
                                 <b>Pets</b> <a class="float-right">1,322</a>
@@ -54,14 +54,15 @@
                         <strong><i class="fas fa-fw fa-envelope"></i> E-mail</strong>
                         <p class="text-muted">{{ $owner->email }}</p>
                         <hr>
-                        <i class="fas fa-fw fa-calendar-plus"></i> Registed</strong>
+                        <strong><i class="fas fa-fw fa-calendar-plus"></i> Registed</strong>
                         <p class="text-muted">{{ $owner->created_at }}</p>
                         <hr>
-                        <i class="far fa-fw fa-calendar-plus"></i> Updated</strong>
+                        <strong><i class="far fa-fw fa-calendar-plus"></i> Updated</strong>
                         <p class="text-muted">{{ $owner->updated_at }}</p>
                         <hr>
 
                         <a href="{{ route('admin.owners.edit', $owner) }}" class="btn bg-gradient-info btn-block"><b>Edit</b></a>
+
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -113,7 +114,7 @@
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                             <div class="tab-pane fade {{ !$errors->any() ? 'active show' : '' }}" id="custom-tabs-one-activity" role="tabpanel" aria-labelledby="custom-tabs-one-activity-tab">
-                                @include('admin.owners.partials.tab-panes.activity')
+                                {{-- @include('admin.owners.partials.tab-panes.activity') --}}
                             </div>
                             <div class="tab-pane fade" id="custom-tabs-one-pets" role="tabpanel" aria-labelledby="custom-tabs-one-pets-tab">
                                 @include('admin.owners.partials.tab-panes.pets')
